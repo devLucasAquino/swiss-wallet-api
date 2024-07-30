@@ -5,14 +5,7 @@ import { prisma } from "../lib/prisma";
 
 export async function getUsers(app: FastifyInstance){
     app.withTypeProvider<ZodTypeProvider>().get(
-        '/users/:userId', {
-            schema:{
-                params: z.object({
-                    userId: z.string().uuid(),
-                })
-            }
-        }, async (request) => {
-            const { userId } = request.params;
+        '/users', {}, async (request) => {
 
             const user = await prisma.user.findMany({
                 select:{
@@ -23,7 +16,7 @@ export async function getUsers(app: FastifyInstance){
                     cpf: true,
                     phone: true,
                 },
-                where: { id: userId }
+                
             })
 
             return user
