@@ -15,11 +15,10 @@ export async function createNewUser(app: FastifyInstance){
                     email: z.string().email(),
                     cpf: z.string().min(11),
                     phone: z.string(),
-                    password: z.string(),
                 })
             }
         }, async (request) => {
-                const { name, date_born, email, cpf, phone, password } = request.body;
+                const { name, date_born, email, cpf, phone } = request.body;
 
                 const user = await prisma.user.create({
                     data: {
@@ -31,7 +30,7 @@ export async function createNewUser(app: FastifyInstance){
                     }
                 })
                     
-        return 'sucesso'
+        return user
         
         })
 
